@@ -13,4 +13,7 @@
                 %span.label.label-info{class: "#{field.type_css_class} #{field.css_class}"}
                   = field.label
               %dd.well
-                = field.pretty_value
+                 - if field.type == :has_many_association
+                  = render partial: 'has_many_details', locals: {objects: @object.send(field.name) , model_config: field.associated_model_config , abstract_model: field.associated_model_config.abstract_model}
+                 - else
+                  = field.type == :ck_editor ? field.pretty_value.html_safe : field.pretty_value
